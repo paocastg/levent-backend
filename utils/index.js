@@ -36,9 +36,11 @@ exports.sortParamToString = (sortBy, direction) => {
 exports.filterOption = (fields) => {
   // TODO: allow some nested properties as fields e.g. characteristics: color, name, age,etc
   const queryFields = Object.getOwnPropertyNames(fields);
+
   const curatedFields = queryFields.filter((field) =>
     filter.options.includes(field)
   );
+
   if (!curatedFields) return {};
 
   const filterBy = curatedFields.reduce((acc, field) => {

@@ -19,6 +19,7 @@ exports.all = async (req, res, next) => {
     .skip(skip)
     .limit(limit)
     .populate("user", { username: 1, email: 1, number: 1 });
+
   const allData = Post.countDocuments();
   const response = await Promise.all([docs.exec(), allData.exec()]);
   const [data, total] = response;
@@ -87,7 +88,6 @@ exports.updatePromoted = async (req, res, next) => {
 
 exports.sendEmail = async (req, res, next) => {
   const { body = {} } = req;
-
   sendEmail(body.name, body.mail, body.subject, body.body, body.emailcompany);
   res.json({ data: true });
 };

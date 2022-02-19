@@ -27,7 +27,7 @@ const config = {
     },
   },
   // TODO: add more filter options
-  filter: { options: ["type"] },
+  filter: { options: ["ubication", "category"] },
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
 };
 
