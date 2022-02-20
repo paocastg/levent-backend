@@ -52,37 +52,11 @@ exports.delete = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   const { params = {}, body = {} } = req;
   const post = body;
-  // Handle forbidden updates (only "admins" could do this)
-  if ("hidden" in post) delete post.hidden;
-  if ("promoted" in post) delete post.promoted;
+
   const data = await Post.findByIdAndUpdate(params.id, post, {
     runValidators: true,
     new: true,
   });
-  res.json({ data });
-};
-
-// TODO:
-//  only admin can hide or unhide
-exports.updateHidden = async (req, res, next) => {
-  const { params = {}, body = {} } = req;
-  const data = await Post.findByIdAndUpdate(
-    params.id,
-    { hidden: body.hidden },
-    { runValidators: true, new: true }
-  );
-  res.json({ data });
-};
-
-// TODO:
-// a post can be promoted only after paying a small fee
-exports.updatePromoted = async (req, res, next) => {
-  const { params = {}, body = {} } = req;
-  const data = await Post.findByIdAndUpdate(
-    params.id,
-    { promoted: body.promoted },
-    { runValidators: true, new: true }
-  );
   res.json({ data });
 };
 

@@ -10,7 +10,4 @@ router
   .put(authToken, controller.update)
   .delete(authToken, controller.delete);
 
-router.route("/:id/update/hidden").put(authToken, controller.updateHidden);
-router.route("/:id/update/promoted").put(authToken, controller.updatePromoted);
-
 module.exports = router;

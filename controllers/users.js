@@ -64,7 +64,7 @@ exports.createUser = async (req, res, next) => {
     email: body.email,
   });
   const savedUser = await user.save();
-  // welcomeEmail(body.username, body.email);
+
   const accessToken = jwt.sign(
     {
       username: user.username,
