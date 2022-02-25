@@ -27,7 +27,7 @@ const config = {
     },
   },
   // TODO: add more filter options
-  filter: { options: ["ubication", "category"] },
+  filter: { options: ["ubication", "category", "published"] },
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
 };
 

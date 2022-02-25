@@ -8,6 +8,7 @@ const {
 } = require("../utils");
 const { sendEmail } = require("../utils/mail");
 require("express-async-errors");
+const moment = require("moment");
 
 exports.all = async (req, res, next) => {
   // TODO: refactor
@@ -63,5 +64,20 @@ exports.update = async (req, res, next) => {
 exports.sendEmail = async (req, res, next) => {
   const { body = {} } = req;
   sendEmail(body.name, body.mail, body.subject, body.body, body.emailcompany);
+  res.json({ data: true });
+};
+
+exports.paymentPost = async (req, res, next) => {
+  const id = req.params.id;
+  const dataBD = await Post.findById(id);
+  dataBD.published = 1;
+  dataBD.atPublished = moment();
+  const ahora = moment();
+  dataBD.atCaduce = ahora.add(7, "d");
+  const data = await Post.findByIdAndUpdate(id, dataBD, {
+    runValidators: true,
+    new: true,
+  });
+
   res.json({ data: true });
 };

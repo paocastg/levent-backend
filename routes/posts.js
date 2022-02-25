@@ -10,4 +10,5 @@ router
   .put(authToken, controller.update)
   .delete(authToken, controller.delete);
 
+router.route("/paymentPost/:id").post(controller.paymentPost);
 module.exports = router;

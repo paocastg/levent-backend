@@ -38,16 +38,21 @@ const postFields = {
       trim: true,
       required: [true, "Por favor indica  el link de instagram"],
     },
-    page: {
-      type: String,
-      required: [true, "Por favor indica el  el link de la pagina"],
-      trim: true,
-    },
   },
   rate: {
     type: String,
     trim: true,
     maxLength: 50,
+  },
+  published: {
+    type: Number,
+    default: 0,
+  },
+  atPublished: {
+    type: Date,
+  },
+  atCaduce: {
+    type: Date,
   },
 
   photos: [String],

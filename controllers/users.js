@@ -17,15 +17,6 @@ const schemaLogin = Joi.object({
   pwd: Joi.string().min(6).max(30).required(),
 });
 
-const schemaEmailRecovery = Joi.object({
-  email: Joi.string().required().email(),
-});
-
-const schemaResetPassword = Joi.object({
-  newPwd: Joi.string().min(6).max(30).required(),
-  id: Joi.string(),
-});
-
 exports.all = async (req, res, next) => {
   const data = await User.find({}).populate("posts");
   res.json({ data });
@@ -114,41 +105,6 @@ exports.loginUser = async (req, res, next) => {
     username: validUser.username,
     id: validUser._id,
   });
-};
-
-exports.emailRecovery = async (req, res, next) => {
-  const { error, value: body } = schemaEmailRecovery.validate(req.body);
-  if (error) {
-    return res.json({ error: true, message: error.details[0].message });
-  }
-  const validUser = await User.findOne({ email: body.email });
-
-  if (!validUser)
-    return res.json({
-      error: true,
-      message: "Éste email no está asociado a ningún usuario",
-    });
-
-  changePassword(validUser.username, validUser.email, validUser._id);
-  res.json({
-    error: false,
-    id: validUser._id,
-  });
-};
-
-exports.resetPassword = async (req, res, next) => {
-  const { error, value: body } = schemaResetPassword.validate(req.body);
-  if (error) {
-    return res.json({ error: true, message: error.details[0].message });
-  }
-  const hashedPassword = await bcrypt.hash(body.newPwd, 10);
-
-  const updatedUser = await User.findByIdAndUpdate(
-    body.id,
-    { pwd: hashedPassword },
-    { runValidators: true, new: true }
-  );
-  res.json(updatedUser);
 };
 
 exports.updateUser = async (req, res, next) => {
