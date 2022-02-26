@@ -1,7 +1,7 @@
-const stripe = require("stripe")(
-  "sk_test_51KWZiGCPhQu9FAfU5xUdp7u8rdyzGxn6YLzoE46wV8heAWVZR4bX9GEZ1uDCTn9fjBXobwo7qHrlQwSBx02JGeaV00Uy6HyDvO"
-);
-const YOUR_DOMAIN = "http://localhost:3000/myposts";
+const config = require("../config/index");
+const { YOUR_DOMAIN, STRIPE_KEY } = config;
+const stripe = require("stripe")(STRIPE_KEY);
+const DOMAIN = `${YOUR_DOMAIN}/myposts`;
 
 exports.checkPayment = async (req, res, next) => {
   const id = req.params.id;
@@ -15,8 +15,8 @@ exports.checkPayment = async (req, res, next) => {
       },
     ],
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}?success=true&idPost=${id}`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    success_url: `${DOMAIN}?success=true&idPost=${id}`,
+    cancel_url: `${DOMAIN}?canceled=true`,
   });
 
   res.redirect(303, session.url);

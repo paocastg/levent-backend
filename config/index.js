@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 const config = {
+  STRIPE_KEY: process.env.STRIPE_KEY,
+  YOUR_DOMAIN: process.env.YOUR_DOMAIN,
   PORT: process.env.PORT || 3002,
   DATABASE: {
     protocol: process.env.MONGODB_PROTOCOL,
