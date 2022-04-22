@@ -1,7 +1,7 @@
 const stripe = require("stripe")(
   "sk_test_51KWZiGCPhQu9FAfU5xUdp7u8rdyzGxn6YLzoE46wV8heAWVZR4bX9GEZ1uDCTn9fjBXobwo7qHrlQwSBx02JGeaV00Uy6HyDvO"
 );
-const YOUR_DOMAIN = "https://levent-app.netlify.app/myposts";
+const YOUR_DOMAIN = "http://localhost:3000/myposts";
 
 exports.checkPayment = async (req, res, next) => {
   const id = req.params.id;
