@@ -1,18 +1,27 @@
-const nodemailer = require("nodemailer");
-const sgTransport = require("nodemailer-sendgrid");
+const sgMail = require('@sendgrid/mail');
+
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.sendEmail = async (name, email, subject, body, emailcompany) => {
-  const options = {
-    apiKey: process.env.SENGRID_API_KEY,
-  };
+  try {
+    const msg = {
+      to: emailcompany,
+      from: process.env.SENDER_EMAIL,
+      subject: subject,
+      text: `Hola, soy ${name}, me interesa cotizar tu servicio`,
+      html: `
+        <p>Hola, soy ${name}, me interesa cotizar tu servicio.</p>
+        <p>Email de contacto: ${email}</p>
+        <p>${body}</p>
+      `,
+    };
 
-  let transporter = nodemailer.createTransport(sgTransport(options));
-
-  let info = await transporter.sendMail({
-    from: `${process.env.SENDER_EMAIL}`, // sender address
-    to: `${emailcompany}`, // list of receivers
-    subject: `${subject}`, // Subject line
-    text: `Hola, soy ${name} , me interesa cotizar tu servicio`, // plain text body
-    html: `<p>Hola, soy ${name} , me interesa cotizar tu servicio, enviar cotizacion al ${email}, </p><p> ${body} </p>`, // html body
-  });
+    await sgMail.send(msg);
+    return true;
+  } catch (error) {
+    console.error('Error enviando correo:', error);
+    throw error;
+  }
 };
+
